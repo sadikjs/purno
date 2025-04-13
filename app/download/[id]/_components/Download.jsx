@@ -100,7 +100,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
       }
 
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio * 2,
+        scale: window.devicePixelRatio || 1,
       }); // Increase scale for better resolution.
       const imgData = canvas.toDataURL("image/png");
 
