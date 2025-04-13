@@ -100,7 +100,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
       }
 
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio || 1,
+        scale: window.devicePixelRatio * 2,
       }); // Increase scale for better resolution.
       const imgData = canvas.toDataURL("image/png");
 
@@ -143,6 +143,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
             <div className="w-1/6 pl-2">
               <Image
+                className="object-contain"
                 src={Logo}
                 alt="logo"
                 width={100}
@@ -177,7 +178,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
               <tr className="flex flex-row justify-between items-start">
                 <td>
                   <Image
-                    className="border border-gray-300 w-[100px] h-[130px]"
+                    className="border border-gray-300 w-[100px] h-[130px] object-contain"
                     src={data.picture}
                     alt="profile picture"
                     width={100}
@@ -186,12 +187,12 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     quality={100}
                   />
                 </td>
-                <td className="flex flex-col justify-end items-end">
+                <td className="flex flex-col justify-end items-end gap-y-1.5">
                   <p style={{ fontFamily: "Times New Roman, serif" }}>
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
-                    className="pr-3"
+                    className="pr-3 object-contain"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
                     width={100}
