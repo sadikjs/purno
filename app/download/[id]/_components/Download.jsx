@@ -62,34 +62,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
     }
   }, [isClient, data]);
 
-  // Function to generate and download the PDF
-  // const generatePdf = async () => {
-  //   const element = document.getElementById("pdfContent"); // The element to convert into PDF
-  //   if (!element) {
-  //     alert("Content to generate is missing!");
-  //     return;
-  //   }
-
-  //   // Convert the element to a canvas
-  //   const canvas = await html2canvas(element, {
-  //     scale: window.devicePixelRatio * 2,
-  //   }); // Higher scale = better quality
-  //   const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
-
-  //   // Create a new jsPDF instance
-  //   const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
-
-  //   // Calculate dimensions
-  //   const pdfWidth = pdf.internal.pageSize.getWidth();
-  //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
-
-  //   // Add the image to the PDF
-  //   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-  //   // Save the PDF
-  //   pdf.save("generated-content.pdf");
-  // };
-
   const generatePdf = async () => {
     try {
       const element = document.getElementById("content"); // Get the element
@@ -100,7 +72,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
       }
 
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio * 2,
+        scale: window.devicePixelRatio * 3,
       }); // Increase scale for better resolution.
       const imgData = canvas.toDataURL("image/png");
 
