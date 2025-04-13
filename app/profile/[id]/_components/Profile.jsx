@@ -63,7 +63,7 @@ const Profile = ({ id }) => {
         <div className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12">
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
             <div className="w-1/6 pl-2">
-              <Image src={Logo} alt="logo" width="100" height="100" />
+              <Image src={Logo} alt="logo" width={100} height={100} />
             </div>
             <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
               <h1
@@ -94,8 +94,8 @@ const Profile = ({ id }) => {
                     className="border border-gray-300 w-[100px] h-[130px]"
                     src={data.picture}
                     alt="profile picture "
-                    width="100"
-                    height="130"
+                    width={100}
+                    height={130}
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end">
@@ -104,9 +104,9 @@ const Profile = ({ id }) => {
                   </p>
                   <Image
                     className="pr-3"
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:3000/profile/${data._id}`}
-                    width="100"
-                    height="100"
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/profile/${data._id}`}
+                    width={100}
+                    height={100}
                     alt="qrcode"
                   />
                 </td>

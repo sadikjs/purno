@@ -145,8 +145,8 @@ const Download = ({ id, filename = "document.pdf" }) => {
               <Image
                 src={Logo}
                 alt="logo"
-                width="100px"
-                height="100"
+                width={100}
+                height={100}
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                 quality={100}
               />
@@ -180,8 +180,8 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     className="border border-gray-300 w-[100px] h-[130px]"
                     src={data.picture}
                     alt="profile picture"
-                    width="100"
-                    height="130"
+                    width={100}
+                    height={130}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                     quality={100}
                   />
@@ -192,10 +192,10 @@ const Download = ({ id, filename = "document.pdf" }) => {
                   </p>
                   <Image
                     className="pr-3"
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:3000/profile/${data._id}`}
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
-                    width="100"
-                    height="100"
+                    width={100}
+                    height={100}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                     quality={100}
                   />
