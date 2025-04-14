@@ -21,6 +21,7 @@ const inter = Inter({
 
 const Download = ({ id, filename = "document.pdf" }) => {
   const buttonRef = useRef(null);
+  const contentRef = useRef(null);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -158,7 +159,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
       return; // Or show a loading indicator
     }
 
-    const element = document.getElementById(id);
+    const element = document.getElementById(id) || contentRef.current;
 
     if (!element) {
       console.error("Content element not found.");
@@ -173,10 +174,11 @@ const Download = ({ id, filename = "document.pdf" }) => {
 
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = pdf.internal.pageSize.getWidth() - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(filename);
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -204,6 +206,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
           Download PDF
         </button>
         <div
+          ref={contentRef}
           id={id}
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
         >
@@ -216,7 +219,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
                 width={100}
                 height={100}
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                quality={100}
               />
             </div>
             <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
@@ -252,7 +254,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     width={100}
                     height={130}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                    quality={100}
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end">
@@ -270,7 +271,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     width={100}
                     height={100}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                    quality={100}
                   />
                 </td>
               </tr>
