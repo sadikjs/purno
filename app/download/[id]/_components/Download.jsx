@@ -25,6 +25,12 @@ const Download = ({ id, filename = "document.pdf" }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false);
+  const imageRef = useRef(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imageTwoRef = useRef(null);
+  const [imageTwoLoaded, setImageTwoLoaded] = useState(false);
+  const imageThreeRef = useRef(null);
+  const [imageThreeLoaded, setImageThreeLoaded] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -55,6 +61,38 @@ const Download = ({ id, filename = "document.pdf" }) => {
       fetchUser();
     }
   }, [id]);
+  useEffect(() => {
+    const img = imageRef.current;
+    if (img && !img.complete) {
+      img.onload = () => {
+        setImageLoaded(true);
+      };
+    } else {
+      setImageLoaded(true); // Image might already be loaded in cache
+    }
+  }, []);
+
+  useEffect(() => {
+    const img = imageTwoRef.current;
+    if (img && !img.complete) {
+      img.onload = () => {
+        setImageTwoLoaded(true);
+      };
+    } else {
+      setImageTwoLoaded(true); // Image might already be loaded in cache
+    }
+  }, []);
+
+  useEffect(() => {
+    const img = imageThreeRef.current;
+    if (img && !img.complete) {
+      img.onload = () => {
+        setImageThreeLoaded(true);
+      };
+    } else {
+      setImageThreeLoaded(true); // Image might already be loaded in cache
+    }
+  }, []);
 
   useEffect(() => {
     if (isClient && buttonRef.current) {
@@ -88,6 +126,62 @@ const Download = ({ id, filename = "document.pdf" }) => {
   //   }
   // };
 
+  // const generatePdff = async () => {
+  //   const element = document.getElementById("pdfContent"); // The element to convert into PDF
+  //   if (!element) {
+  //     alert("Content to generate is missing!");
+  //     return;
+  //   }
+
+  //   // Convert the element to a canvas
+  //   const canvas = await html2canvas(element, { scale: 2 }); // Higher scale = better quality
+  //   const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
+
+  //   // Create a new jsPDF instance
+  //   const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
+
+  //   // Calculate dimensions
+  //   const pdfWidth = pdf.internal.pageSize.getWidth();
+  //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
+
+  //   // Add the image to the PDF
+  //   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+  //   // Save the PDF
+  //   pdf.save("generated-content.pdf");
+  // };
+
+  const handleDownload = async () => {
+    if (!imageLoaded && !imageTwoLoaded && !imageThreeLoaded) {
+      console.log("Image not yet loaded, waiting...");
+      return; // Or show a loading indicator
+    }
+
+    const element = document.getElementById(id);
+
+    if (!element) {
+      console.error("Content element not found.");
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(element, {
+        scale: window.devicePixelRatio || 1,
+        useCORS: true,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = pdf.internal.pageSize.getWidth() - 20;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+      pdf.save(filename);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -95,49 +189,27 @@ const Download = ({ id, filename = "document.pdf" }) => {
   if (error) {
     return <div style={{ color: "red" }}>Error: {error}</div>;
   }
-  const generatePdff = async () => {
-    const element = document.getElementById("pdfContent"); // The element to convert into PDF
-    if (!element) {
-      alert("Content to generate is missing!");
-      return;
-    }
 
-    // Convert the element to a canvas
-    const canvas = await html2canvas(element, { scale: 2 }); // Higher scale = better quality
-    const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
-
-    // Create a new jsPDF instance
-    const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
-
-    // Calculate dimensions
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
-
-    // Add the image to the PDF
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-    // Save the PDF
-    pdf.save("generated-content.pdf");
-  };
   return (
     <>
       <div
         className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
         <button
-          onClick={generatePdff}
+          onClick={handleDownload}
           ref={buttonRef}
           className="text-red relative top-100"
         >
           Download PDF
         </button>
         <div
-          id="pdfContent"
+          id={id}
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
         >
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
             <div className="w-1/6 pl-2">
               <Image
+                ref={imageRef}
                 className="object-contain"
                 src={Logo}
                 alt="logo"
@@ -173,6 +245,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
               <tr className="flex flex-row justify-between items-start">
                 <td>
                   <Image
+                    ref={imageTwoRef}
                     className="border border-gray-300 w-[100px] h-[130px] object-contain"
                     src={data.picture}
                     alt="profile picture"
@@ -190,6 +263,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
+                    ref={imageThreeRef}
                     className="pr-3"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
