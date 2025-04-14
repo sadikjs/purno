@@ -61,6 +61,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
       fetchUser();
     }
   }, [id]);
+
   useEffect(() => {
     const img = imageRef.current;
     if (img && !img.complete) {
@@ -166,7 +167,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
 
     try {
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio || 1,
+        scale: window.devicePixelRatio * 2,
         useCORS: true,
       });
 
@@ -210,7 +211,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
             <div className="w-1/6 pl-2">
               <Image
                 ref={imageRef}
-                className="object-contain"
                 src={Logo}
                 alt="logo"
                 width={100}
@@ -246,7 +246,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
                 <td>
                   <Image
                     ref={imageTwoRef}
-                    className="border border-gray-300 w-[100px] h-[130px] object-contain"
+                    className="border border-gray-300 w-[100px] h-[130px]"
                     src={data.picture}
                     alt="profile picture"
                     width={100}
