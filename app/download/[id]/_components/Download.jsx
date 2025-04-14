@@ -62,31 +62,31 @@ const Download = ({ id, filename = "document.pdf" }) => {
     }
   }, [isClient, data]);
 
-  const generatePdf = async () => {
-    try {
-      const element = document.getElementById("content"); // Get the element
+  // const generatePdf = async () => {
+  //   try {
+  //     const element = document.getElementById("content"); // Get the element
 
-      if (!element) {
-        console.error("Element not found");
-        return;
-      }
+  //     if (!element) {
+  //       console.error("Element not found");
+  //       return;
+  //     }
 
-      const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio * 3,
-      }); // Increase scale for better resolution.
-      const imgData = canvas.toDataURL("image/png");
+  //     const canvas = await html2canvas(element, {
+  //       scale: window.devicePixelRatio * 2,
+  //     }); // Increase scale for better resolution.
+  //     const imgData = canvas.toDataURL("image/png");
 
-      const pdf = new jsPDF("p", "mm", "a4"); // Create a new PDF instance.
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //     const pdf = new jsPDF("p", "mm", "a4"); // Create a new PDF instance.
+  //     const imgProps = pdf.getImageProperties(imgData);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(filename); // Download the PDF.
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    }
-  };
+  //     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  //     pdf.save(filename); // Download the PDF.
+  //   } catch (error) {
+  //     console.error("Error generating PDF:", error);
+  //   }
+  // };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -95,21 +95,44 @@ const Download = ({ id, filename = "document.pdf" }) => {
   if (error) {
     return <div style={{ color: "red" }}>Error: {error}</div>;
   }
+  const generatePdff = async () => {
+    const element = document.getElementById("pdfContent"); // The element to convert into PDF
+    if (!element) {
+      alert("Content to generate is missing!");
+      return;
+    }
 
+    // Convert the element to a canvas
+    const canvas = await html2canvas(element, { scale: 2 }); // Higher scale = better quality
+    const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
+
+    // Create a new jsPDF instance
+    const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
+
+    // Calculate dimensions
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
+
+    // Add the image to the PDF
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+    // Save the PDF
+    pdf.save("generated-content.pdf");
+  };
   return (
     <>
       <div
         className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
         <button
-          onClick={generatePdf}
+          onClick={generatePdff}
           ref={buttonRef}
           className="text-red relative top-100"
         >
           Download PDF
         </button>
         <div
-          id="content"
+          id="pdfContent"
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
         >
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
@@ -159,12 +182,15 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     quality={100}
                   />
                 </td>
-                <td className="flex flex-col justify-end items-end gap-y-1.5">
-                  <p style={{ fontFamily: "Times New Roman, serif" }}>
+                <td className="flex flex-col justify-end items-end">
+                  <p
+                    style={{ fontFamily: "Times New Roman, serif" }}
+                    className="pb-1"
+                  >
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
-                    className="pr-3 object-contain"
+                    className="pr-3"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
                     width={100}
