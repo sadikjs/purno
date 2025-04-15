@@ -66,7 +66,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
         // Add a small delay to allow for layout to settle
         setTimeout(() => {
           setIsReadyToDownload(true);
-        }, 200); // Adjust delay as needed
+        }, 2000); // Adjust delay as needed
       }
     };
 
