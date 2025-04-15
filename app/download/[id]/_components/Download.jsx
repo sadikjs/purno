@@ -208,7 +208,6 @@ const Download = ({ id, filename = "document.pdf" }) => {
                 width={100}
                 height={100}
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                priority
               />
             </div>
             <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
@@ -237,13 +236,12 @@ const Download = ({ id, filename = "document.pdf" }) => {
               <tr className="flex flex-row justify-between items-start">
                 <td>
                   <Image
-                    className="border border-gray-300 w-[100px] h-[130px]"
+                    className="border border-gray-300 w-[100px] h-[130px] block"
                     src={data.picture}
                     alt="profile picture"
                     width={100}
                     height={130}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                    priority
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end">
@@ -254,7 +252,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
-                    className="pr-3"
+                    className="pr-3 block"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
                     width={100}
