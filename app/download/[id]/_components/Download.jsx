@@ -19,18 +19,16 @@ const inter = Inter({
   display: "swap", // Ensures a smooth loading experience
 });
 
-const Download = ({ id, filename = "document.pdf" }) => {
+const Download = ({ id }) => {
   const buttonRef = useRef(null);
-  const contentRef = useRef(null);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false);
-  const [isReadyToDownload, setIsReadyToDownload] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -58,38 +56,11 @@ const Download = ({ id, filename = "document.pdf" }) => {
     }
   }, [id]);
 
-  useEffect(() => {
-    const img = contentRef.current?.querySelector("img"); // Assuming the image is directly inside the content
-
-    const checkReady = () => {
-      if (img && img.complete) {
-        // Add a small delay to allow for layout to settle
-        setTimeout(() => {
-          setIsReadyToDownload(true);
-        }, 2000); // Adjust delay as needed
-      }
-    };
-
-    if (img) {
-      if (img.complete) {
-        checkReady();
-      } else {
-        img.onload = checkReady;
-        img.onerror = () => {
-          console.error("Error loading image.");
-          setIsReadyToDownload(true); // Allow download with a potentially broken image
-        };
-      }
-    } else {
-      setIsReadyToDownload(true); // If no image, we're ready
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isClient && buttonRef.current) {
-      buttonRef.current.click();
-    }
-  }, [isClient, data]);
+  // useEffect(() => {
+  //   if (isClient && buttonRef.current) {
+  //     buttonRef.current.click();
+  //   }
+  // }, [isClient, data]);
 
   // const generatePdf = async () => {
   //   try {
@@ -117,62 +88,29 @@ const Download = ({ id, filename = "document.pdf" }) => {
   //   }
   // };
 
-  // const generatePdff = async () => {
-  //   const element = document.getElementById("pdfContent"); // The element to convert into PDF
-  //   if (!element) {
-  //     alert("Content to generate is missing!");
-  //     return;
-  //   }
-
-  //   // Convert the element to a canvas
-  //   const canvas = await html2canvas(element, { scale: 2 }); // Higher scale = better quality
-  //   const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
-
-  //   // Create a new jsPDF instance
-  //   const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
-
-  //   // Calculate dimensions
-  //   const pdfWidth = pdf.internal.pageSize.getWidth();
-  //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
-
-  //   // Add the image to the PDF
-  //   pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-  //   // Save the PDF
-  //   pdf.save("generated-content.pdf");
-  // };
-  const handleDownload = async () => {
-    if (!isReadyToDownload) {
-      console.log("Waiting for content and image to load...");
-      return; // Or show a loading indicator
-    }
-
-    const element = document.getElementById(id) || contentRef.current;
-
+  const generatePdff = async () => {
+    const element = document.getElementById("pdfContent"); // The element to convert into PDF
     if (!element) {
-      console.error("Content element not found.");
+      alert("Content to generate is missing!");
       return;
     }
 
-    try {
-      const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio || 1,
-        useCORS: true,
-        // Consider these options:
-        // windowWidth: element.offsetWidth,
-        // windowHeight: element.offsetHeight,
-        logging: true,
-      });
+    // Convert the element to a canvas
+    const canvas = await html2canvas(element, { scale: 2 }); // Higher scale = better quality
+    const imgData = canvas.toDataURL("image/png"); // Convert canvas to PNG
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = pdf.internal.pageSize.getWidth() - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      pdf.save(filename);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    }
+    // Create a new jsPDF instance
+    const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
+
+    // Calculate dimensions
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
+
+    // Add the image to the PDF
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+    // Save the PDF
+    pdf.save("generated-content.pdf");
   };
 
   if (isLoading) {
@@ -188,16 +126,11 @@ const Download = ({ id, filename = "document.pdf" }) => {
       <div
         className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
-        <button
-          onClick={handleDownload}
-          ref={buttonRef}
-          className="text-red relative top-100"
-        >
+        <button onClick={generatePdff} className="text-white relative pt-20">
           Download PDF
         </button>
         <div
-          ref={contentRef}
-          id={id}
+          id="pdfContent"
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
         >
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
