@@ -26,12 +26,7 @@ const Download = ({ id, filename = "document.pdf" }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false);
-  const imageRef = useRef(null);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const imageTwoRef = useRef(null);
-  const [imageTwoLoaded, setImageTwoLoaded] = useState(false);
-  const imageThreeRef = useRef(null);
-  const [imageThreeLoaded, setImageThreeLoaded] = useState(false);
+  const [isReadyToDownload, setIsReadyToDownload] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -64,35 +59,29 @@ const Download = ({ id, filename = "document.pdf" }) => {
   }, [id]);
 
   useEffect(() => {
-    const img = imageRef.current;
-    if (img && !img.complete) {
-      img.onload = () => {
-        setImageLoaded(true);
-      };
-    } else {
-      setImageLoaded(true); // Image might already be loaded in cache
-    }
-  }, []);
+    const img = contentRef.current?.querySelector("img"); // Assuming the image is directly inside the content
 
-  useEffect(() => {
-    const img = imageTwoRef.current;
-    if (img && !img.complete) {
-      img.onload = () => {
-        setImageTwoLoaded(true);
-      };
-    } else {
-      setImageTwoLoaded(true); // Image might already be loaded in cache
-    }
-  }, []);
+    const checkReady = () => {
+      if (img && img.complete) {
+        // Add a small delay to allow for layout to settle
+        setTimeout(() => {
+          setIsReadyToDownload(true);
+        }, 200); // Adjust delay as needed
+      }
+    };
 
-  useEffect(() => {
-    const img = imageThreeRef.current;
-    if (img && !img.complete) {
-      img.onload = () => {
-        setImageThreeLoaded(true);
-      };
+    if (img) {
+      if (img.complete) {
+        checkReady();
+      } else {
+        img.onload = checkReady;
+        img.onerror = () => {
+          console.error("Error loading image.");
+          setIsReadyToDownload(true); // Allow download with a potentially broken image
+        };
+      }
     } else {
-      setImageThreeLoaded(true); // Image might already be loaded in cache
+      setIsReadyToDownload(true); // If no image, we're ready
     }
   }, []);
 
@@ -152,10 +141,9 @@ const Download = ({ id, filename = "document.pdf" }) => {
   //   // Save the PDF
   //   pdf.save("generated-content.pdf");
   // };
-
   const handleDownload = async () => {
-    if (!imageLoaded && !imageTwoLoaded && !imageThreeLoaded) {
-      console.log("Image not yet loaded, waiting...");
+    if (!isReadyToDownload) {
+      console.log("Waiting for content and image to load...");
       return; // Or show a loading indicator
     }
 
@@ -168,17 +156,19 @@ const Download = ({ id, filename = "document.pdf" }) => {
 
     try {
       const canvas = await html2canvas(element, {
-        scale: window.devicePixelRatio * 2,
+        scale: window.devicePixelRatio || 1,
         useCORS: true,
+        // Consider these options:
+        // windowWidth: element.offsetWidth,
+        // windowHeight: element.offsetHeight,
+        logging: true,
       });
 
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      const imgWidth = pdf.internal.pageSize.getWidth() - 20;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
       pdf.save(filename);
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -213,12 +203,12 @@ const Download = ({ id, filename = "document.pdf" }) => {
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
             <div className="w-1/6 pl-2">
               <Image
-                ref={imageRef}
                 src={Logo}
                 alt="logo"
                 width={100}
                 height={100}
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                priority
               />
             </div>
             <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
@@ -247,13 +237,13 @@ const Download = ({ id, filename = "document.pdf" }) => {
               <tr className="flex flex-row justify-between items-start">
                 <td>
                   <Image
-                    ref={imageTwoRef}
                     className="border border-gray-300 w-[100px] h-[130px]"
                     src={data.picture}
                     alt="profile picture"
                     width={100}
                     height={130}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                    priority
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end">
@@ -264,13 +254,13 @@ const Download = ({ id, filename = "document.pdf" }) => {
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
-                    ref={imageThreeRef}
                     className="pr-3"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
                     width={100}
                     height={100}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                    priority
                   />
                 </td>
               </tr>
