@@ -100,7 +100,9 @@ const Download = ({ id }) => {
     // Save the PDF
     pdf.save("generated-content.pdf");
   };
-
+  const handlePrint = () => {
+    window.print();
+  };
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -119,11 +121,8 @@ const Download = ({ id }) => {
             Download PDF
           </button>
         ) : (
-          <button
-            onClick="windows.print()"
-            className="text-white relative pt-20"
-          >
-            print
+          <button onClick={handlePrint} className="text-white relative pt-20">
+            <Printer />
           </button>
         )}
         <div
