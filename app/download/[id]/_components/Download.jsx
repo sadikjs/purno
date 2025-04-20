@@ -3,11 +3,10 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { useEffect, useState, useRef } from "react";
 import Logo from "@/public/assets/logo.png";
-import { toast } from "sonner";
 import Link from "next/link";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
+import { Printer } from "lucide-react";
 //font
 import { Inter } from "next/font/google";
 
@@ -18,13 +17,34 @@ const inter = Inter({
   variable: "--font-inter", // Define a CSS variable for easy use
   display: "swap", // Ensures a smooth loading experience
 });
+import { useSession, signOut } from "next-auth/react";
 
 const Download = ({ id }) => {
-  const buttonRef = useRef(null);
+  const { data: session } = useSession();
+  const [loginSession, setLoginSession] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false);
+
+  console.log(loggedInUser);
+  useEffect(() => {
+    setLoginSession(session);
+    async function fetchMe() {
+      try {
+        const response = await fetch("/api/me");
+        if (response.ok) {
+          const data = await response.json();
+          setLoggedInUser(data);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    fetchMe();
+  }, [session]);
 
   // useEffect(() => {
   //   setIsClient(true);
@@ -55,38 +75,6 @@ const Download = ({ id }) => {
       fetchUser();
     }
   }, [id]);
-
-  // useEffect(() => {
-  //   if (isClient && buttonRef.current) {
-  //     buttonRef.current.click();
-  //   }
-  // }, [isClient, data]);
-
-  // const generatePdf = async () => {
-  //   try {
-  //     const element = document.getElementById("content"); // Get the element
-
-  //     if (!element) {
-  //       console.error("Element not found");
-  //       return;
-  //     }
-
-  //     const canvas = await html2canvas(element, {
-  //       scale: window.devicePixelRatio * 2,
-  //     }); // Increase scale for better resolution.
-  //     const imgData = canvas.toDataURL("image/png");
-
-  //     const pdf = new jsPDF("p", "mm", "a4"); // Create a new PDF instance.
-  //     const imgProps = pdf.getImageProperties(imgData);
-  //     const pdfWidth = pdf.internal.pageSize.getWidth();
-  //     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-  //     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-  //     pdf.save(filename); // Download the PDF.
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   }
-  // };
 
   const generatePdff = async () => {
     const element = document.getElementById("pdfContent"); // The element to convert into PDF
@@ -126,9 +114,18 @@ const Download = ({ id }) => {
       <div
         className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
-        <button onClick={generatePdff} className="text-white relative pt-20">
-          Download PDF
-        </button>
+        {loggedInUser?.user.role === "admin" ? (
+          <button onClick={generatePdff} className="text-white relative pt-20">
+            Download PDF
+          </button>
+        ) : (
+          <button
+            onClick="windows.print()"
+            className="text-white relative pt-20"
+          >
+            <Printer />
+          </button>
+        )}
         <div
           id="pdfContent"
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"

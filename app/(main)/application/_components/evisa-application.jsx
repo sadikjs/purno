@@ -112,7 +112,7 @@ export default function Register() {
           <div className="">
             <Image src={Logo} alt="logo" width="100" height="100" />
           </div>
-          <div className="flex flex-col gap-y-4 jusity-center items-center">
+          <div className="flex flex-col jusity-center items-center text-sm gap-y-1 lg:gap-y-4 lg:text-xl">
             <h1>КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ</h1>
             <h1>MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC</h1>
             <h2>Бирдиктүү уруксат/Uniform permit</h2>
@@ -121,14 +121,14 @@ export default function Register() {
         <div className="w-5/6 flex flex-col justify-start items-center py-6">
           <Form {...form}>
             <form
-              className="flex flex-col justify-start gap-y-8"
+              className="w-full flex flex-col justify-center lg:justify-start gap-y-4 lg:gap-y-8"
               onSubmit={form.handleSubmit(onsubmit)}
             >
               <FormField
                 name="email"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="">
                     <FormLabel>Email:</FormLabel>
                     <FormControl>
                       <Input type="email" {...field} />
@@ -294,7 +294,7 @@ export default function Register() {
                   </FormItem>
                 )}
               />
-              <div className="flex flex-row gap-x-4 items-center">
+              <div className="flex  flex-col items-center gap-y-2 lg:flex-row lg:gap-x-4">
                 <FormField
                   name="validityVisaForm"
                   control={form.control}

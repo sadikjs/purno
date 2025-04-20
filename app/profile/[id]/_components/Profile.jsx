@@ -3,7 +3,6 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { useEffect, useState, useRef } from "react";
 import Logo from "@/public/assets/logo.png";
-import QRCode from "qrcode";
 //font
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -21,7 +20,6 @@ const Profile = ({ id }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [qr, setQr] = useState("");
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
@@ -68,19 +66,19 @@ const Profile = ({ id }) => {
             <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-bold"
+                className="text-sm font-medium lg:text-md lg:font-bold"
               >
                 КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ
               </h1>
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-bold"
+                className="text-sm font-medium lg:text-md lg:font-bold"
               >
                 MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC
               </h1>
               <h2
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="font-semibold text-md"
+                className="font-normal lg:font-semibold text-sm lg:text-md"
               >
                 Бирдиктүү уруксат/Uniform permit
               </h2>
