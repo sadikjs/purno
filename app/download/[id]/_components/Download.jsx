@@ -123,14 +123,14 @@ const Download = ({ id }) => {
             onClick="windows.print()"
             className="text-white relative pt-20"
           >
-            <Printer />
+            print
           </button>
         )}
         <div
           id="pdfContent"
           className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
         >
-          <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 border-b-2 border-slate-700">
+          <div className="w-[90%] flex flex-col lg:flex-row justify-between items-start pb-6 gap-y-2 lg:gap-x-2 border-b-2 border-slate-700">
             <div className="w-1/6 pl-2">
               <Image
                 src={Logo}
