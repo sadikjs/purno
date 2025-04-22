@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import { format } from "date-fns";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@/public/assets/logo.png";
 import Link from "next/link";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Printer } from "lucide-react";
+import "./style.css";
 //font
 import { Inter } from "next/font/google";
 
@@ -114,7 +115,7 @@ const Download = ({ id }) => {
   return (
     <>
       <div
-        className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
+        className={`${inter.className} main w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
           <button onClick={generatePdff} className="text-white relative pt-20">
@@ -165,18 +166,18 @@ const Download = ({ id }) => {
               <tr className="flex flex-row justify-between items-start">
                 <td>
                   <Image
-                    className="border border-gray-300 w-[100px] h-[130px] block"
+                    className="border border-gray-300 w-[110px] h-[135px] block"
                     src={data.picture}
                     alt="profile picture"
-                    width={100}
-                    height={130}
+                    width={110}
+                    height={135}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end">
                   <p
                     style={{ fontFamily: "Times New Roman, serif" }}
-                    className="pb-1"
+                    className="pb-2"
                   >
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
@@ -184,8 +185,8 @@ const Download = ({ id }) => {
                     className="pr-3 block"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
-                    width={100}
-                    height={100}
+                    width={120}
+                    height={120}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                     priority
                   />
