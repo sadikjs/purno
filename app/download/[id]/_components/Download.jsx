@@ -124,7 +124,7 @@ const Download = ({ id }) => {
           </button>
         ) : (
           <button onClick={handlePrint} className="text-white underline">
-            <Printer className="print:hide" />
+            <Printer className="print:hidden" />
           </button>
         )}
         <div
@@ -212,7 +212,7 @@ const Download = ({ id }) => {
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-2">
-                <td className="w-1/2">Жарандыгы/Citizenship:</td>
+                <td className="w-1/2">Жарандыгы / Citizenship: </td>
                 <td className="w-1/2">{data.citizenship}</td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
