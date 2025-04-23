@@ -114,20 +114,26 @@ const Download = ({ id }) => {
   return (
     <>
       <div
-        className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
+        className={`${inter.className} ${
+          loggedInUser?.user.role === "admin" ? "py-6" : "py-px"
+        } w-full flex flex-col justify-center items-center bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
           <button onClick={generatePdff} className="text-white relative pt-20">
             Download PDF
           </button>
         ) : (
-          <button onClick={handlePrint} className="text-white relative pt-20">
+          <button onClick={handlePrint} className="text-blue-600 underline">
             <Printer />
           </button>
         )}
         <div
           id="pdfContent"
-          className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12 print:w-full print:p-2 print:my-0"
+          className={`flex flex-col justify-center items-center bg-white ${
+            loggedInUser?.user.role === "admin"
+              ? "w-4/5 my-20  p-12"
+              : "w-full p-2"
+          } print:w-full print:p-2 print:my-0`}
         >
           <div className="w-[90%] flex flex-col lg:flex-row justify-between items-start pb-6 gap-y-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
             <div className="w-1/6 pl-2">
