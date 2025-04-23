@@ -7,7 +7,6 @@ import Link from "next/link";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Printer } from "lucide-react";
-import "./style.css";
 //font
 import { Inter } from "next/font/google";
 
@@ -115,7 +114,7 @@ const Download = ({ id }) => {
   return (
     <>
       <div
-        className={`${inter.className} main w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
+        className={`${inter.className} w-full flex flex-col justify-center items-center py-6 bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
           <button onClick={generatePdff} className="text-white relative pt-20">
@@ -128,9 +127,9 @@ const Download = ({ id }) => {
         )}
         <div
           id="pdfContent"
-          className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12"
+          className="w-4/5 flex flex-col justify-center items-center bg-white my-20 p-12 print:w-full print:p-2 print:my-0"
         >
-          <div className="w-[90%] flex flex-col lg:flex-row justify-between items-start pb-6 gap-y-2 lg:gap-x-2 border-b-2 border-slate-700">
+          <div className="w-[90%] flex flex-col lg:flex-row justify-between items-start pb-6 gap-y-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
             <div className="w-1/6 pl-2">
               <Image
                 src={Logo}
@@ -161,7 +160,7 @@ const Download = ({ id }) => {
               </h2>
             </div>
           </div>
-          <table className="w-[90%] flex flex-col gap-y-4 pt-6">
+          <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
               <tr className="flex flex-row justify-between items-start">
                 <td>
