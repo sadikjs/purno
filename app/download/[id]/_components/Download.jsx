@@ -123,8 +123,8 @@ const Download = ({ id }) => {
             Download PDF
           </button>
         ) : (
-          <button onClick={handlePrint} className="text-blue-600 underline">
-            <Printer />
+          <button onClick={handlePrint} className="text-white underline">
+            <Printer className="print:hide" />
           </button>
         )}
         <div
@@ -133,9 +133,9 @@ const Download = ({ id }) => {
             loggedInUser?.user.role === "admin"
               ? "w-4/5 my-20  p-12"
               : "w-full p-2"
-          } print:w-full print:p-2 print:my-0`}
+          } print:w-full print:p-2 print:my-px`}
         >
-          <div className="w-[90%] flex flex-col lg:flex-row justify-between items-start pb-6 gap-y-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
+          <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
             <div className="w-1/6 pl-2">
               <Image
                 src={Logo}
@@ -168,7 +168,7 @@ const Download = ({ id }) => {
           </div>
           <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
-              <tr className="flex flex-row justify-between items-start">
+              <tr className="flex flex-row justify-between items-start gap-x-2">
                 <td>
                   <Image
                     className="border border-gray-300 w-[110px] h-[135px] block"
@@ -179,11 +179,8 @@ const Download = ({ id }) => {
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                   />
                 </td>
-                <td className="flex flex-col justify-end items-end">
-                  <p
-                    style={{ fontFamily: "Times New Roman, serif" }}
-                    className="pb-2"
-                  >
+                <td className="flex flex-col justify-end items-end gap-y-2">
+                  <p style={{ fontFamily: "Times New Roman, serif" }}>
                     Арыздын номери/Reference number {data.referenceNumber}
                   </p>
                   <Image
@@ -214,7 +211,7 @@ const Download = ({ id }) => {
                     : null}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-2">
                 <td className="w-1/2">Жарандыгы/Citizenship:</td>
                 <td className="w-1/2">{data.citizenship}</td>
               </tr>
