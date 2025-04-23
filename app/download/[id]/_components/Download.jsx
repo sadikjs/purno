@@ -115,7 +115,7 @@ const Download = ({ id }) => {
     <>
       <div
         className={`${inter.className} ${
-          loggedInUser?.user.role === "admin" ? "py-6" : "py-px"
+          loggedInUser?.user.role === "admin" ? "py-6" : "bg-white"
         } w-full flex flex-col justify-center items-center bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
@@ -123,7 +123,10 @@ const Download = ({ id }) => {
             Download PDF
           </button>
         ) : (
-          <button onClick={handlePrint} className="text-white underline">
+          <button
+            onClick={handlePrint}
+            className="text-white underline bg-white"
+          >
             <Printer className="print:hidden" />
           </button>
         )}
@@ -133,7 +136,7 @@ const Download = ({ id }) => {
             loggedInUser?.user.role === "admin"
               ? "w-4/5 my-20  p-12"
               : "w-full p-2"
-          } print:w-full print:p-2 print:my-px`}
+          } print:w-full print:p-2 print:my-px `}
         >
           <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
             <div className="w-1/6 pl-2">
@@ -145,22 +148,22 @@ const Download = ({ id }) => {
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
               />
             </div>
-            <div className="w-5/6 flex flex-col gap-y-4 jusity-start items-center">
+            <div className="w-5/6 flex flex-col  gap-y-2 lg:gap-y-4 jusity-start items-center">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-bold"
+                className="text-md font-medium lg:font-bold"
               >
                 КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ
               </h1>
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-bold"
+                className="text-md font-medium lg:font-bold"
               >
                 MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC
               </h1>
               <h2
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-semibold"
+                className="text-md font-medium lg:font-semibold"
               >
                 Бирдиктүү уруксат/Uniform permit
               </h2>
