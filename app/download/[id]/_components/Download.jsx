@@ -123,11 +123,8 @@ const Download = ({ id }) => {
             Download PDF
           </button>
         ) : (
-          <button
-            onClick={handlePrint}
-            className="text-white underline bg-white"
-          >
-            <Printer className="print:hidden" />
+          <button onClick={handlePrint} className="bg-white">
+            <Printer className="text-blue-600 underline print:hidden" />
           </button>
         )}
         <div
