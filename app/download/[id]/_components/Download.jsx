@@ -168,23 +168,25 @@ const Download = ({ id }) => {
           </div>
           <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
+              <tr className="flex justify-end items-end">
+                <td style={{ fontFamily: "Times New Roman, serif" }}>
+                  Арыздын номери/Reference number {data.referenceNumber}
+                </td>
+              </tr>
               <tr className="flex flex-row justify-between items-start gap-x-2">
                 <td>
                   <Image
-                    className="border border-gray-300 w-[110px] h-[135px] block"
+                    className="border border-gray-300 w-[110px] h-[125px] block"
                     src={data.picture}
                     alt="profile picture"
                     width={110}
-                    height={135}
+                    height={120}
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                   />
                 </td>
                 <td className="flex flex-col justify-end items-end gap-y-2">
-                  <p style={{ fontFamily: "Times New Roman, serif" }}>
-                    Арыздын номери/Reference number {data.referenceNumber}
-                  </p>
                   <Image
-                    className="pr-3 block"
+                    className="block"
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
                     alt="qrcode"
                     width={120}
@@ -200,75 +202,85 @@ const Download = ({ id }) => {
               className="flex flex-col"
             >
               <tr className="w-full flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Толук аты-жөнү/Full name:</td>
-                <td className="w-1/2">{data.name}</td>
+                <td className="w-3/6">Толук аты-жөнү/Full name:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.name}</td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Туулган датасы/Date of birth:</td>
-                <td className="w-1/2">
+                <td className="w-3/6">Туулган датасы/Date of birth:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {data.dateOfBirth
                     ? format(new Date(data.dateOfBirth), "dd-MM-yyyy")
                     : null}
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-2">
-                <td className="w-1/2">Жарандыгы / Citizenship: </td>
-                <td className="w-1/2">{data.citizenship}</td>
+                <td className="w-3/6">Жарандыгы / Citizenship: </td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.citizenship}</td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) номери / Number of Travel
                   document (passport):
                 </td>
-                <td className="w-1/2">{data.passport}</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.passport}</td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Жол жүрүүчү документтин түрү/Type of travel document:
                 </td>
-                <td className="w-1/2">{data.travelType}</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.travelType}</td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) берилген датасы/ DATE of
                   issue of the travelling document (passport):
                 </td>
-                <td className="w-1/2">
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {data.passportIssuDate
                     ? format(new Date(data.passportIssuDate), "dd-MM-yyyy")
                     : "null"}
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) бүткөн датасы/ Date of
                   expiry of the travelling document (passport):
                 </td>
-                <td className="w-1/2">
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {data.passportExpireDate
                     ? format(new Date(data.passportExpireDate), "dd-MM-yyyy")
                     : "null"}
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Бирдиктүү документтин мөөнөтү / Validity of uniform permit:
                 </td>
-                <td className="w-1/2">
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {data.permit
                     ? format(new Date(data.permit), "dd-MM-yyyy")
                     : "null"}
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Визанын түрү/Type of visa:</td>
-                <td className="w-1/2">{data.visaType}</td>
+                <td className="w-3/6">Визанын түрү/Type of visa:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.visaType}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">
+              <tr className="flex flex-row justify-start items-start gap-x-2">
+                <td className="w-3/6">
                   Визанын колдонулуу мөөнөтү/Validity of visa:
                 </td>
-                <td className="w-1/2 flex flex-row justify-start items-start gap-x-2">
+                <td className="w-1/6"></td>
+                <td className="w-2/6 flex flex-row justify-start items-start">
                   <div className="">
                     {data.validityVisaTo
                       ? format(new Date(data.validityVisaTo), "dd-MM-yyyy")
@@ -283,23 +295,27 @@ const Download = ({ id }) => {
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Кирүүлөрдүн саны/Number of entries:</td>
-                <td className="w-1/2">{data.numberOfEntries}</td>
+                <td className="w-3/6">Кирүүлөрдүн саны/Number of entries:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.numberOfEntries}</td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Жүрүү мөөнөтү/Period of stay(days):</td>
-                <td className="w-1/2">{data.periodOfStay}</td>
+                <td className="w-3/6">Жүрүү мөөнөтү/Period of stay(days):</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.periodOfStay}</td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Чакыруучу тарап/Invitation party:</td>
-                <td className="w-1/2">{data.invitationParty}</td>
+                <td className="w-3/6">Чакыруучу тарап/Invitation party:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.invitationParty}</td>
               </tr>
               <tr className="flex flex-row justify-start items-end gap-x-4">
-                <td className="w-1/2">
+                <td className="w-3/6">
                   Чакыруу тараптын жеке салык номери/ Inviting party&rsquo;s
                   individual taxpayer number:
                 </td>
-                <td className="w-1/2">
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {" "}
                   <Link className="text-[#2247ee] underline" href="/">
                     {data.taxPayerNumber}
@@ -307,12 +323,14 @@ const Download = ({ id }) => {
                 </td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Иштөөгө уруксут/The right to work:</td>
-                <td className="w-1/2">{data.rightToWork}</td>
+                <td className="w-3/6">Иштөөгө уруксут/The right to work:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">{data.rightToWork}</td>
               </tr>
               <tr className="flex flex-row justify-start items-start gap-x-4">
-                <td className="w-1/2">Берилген датасы/Date of issue:</td>
-                <td className="w-1/2">
+                <td className="w-3/6">Берилген датасы/Date of issue:</td>
+                <td className="w-1/6"></td>
+                <td className="w-2/6">
                   {data.dateOfIssue
                     ? format(new Date(data.dateOfIssue), "dd-MM-yyyy")
                     : "null"}
