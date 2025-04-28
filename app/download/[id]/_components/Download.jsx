@@ -168,12 +168,12 @@ const Download = ({ id }) => {
           </div>
           <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
-              <tr className="flex justify-end items-end">
+              <tr className="flex justify-end items-end pb-2">
                 <td style={{ fontFamily: "Times New Roman, serif" }}>
                   Арыздын номери/Reference number {data.referenceNumber}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-between items-start gap-x-2">
+              <tr className="flex flex-row justify-between items-start gap-x-2 pt-2">
                 <td>
                   <Image
                     className="border border-gray-300 w-[110px] h-[125px] block"
@@ -199,7 +199,7 @@ const Download = ({ id }) => {
             </thead>
             <tbody
               style={{ fontFamily: "Times New Roman, serif" }}
-              className="flex flex-col"
+              className="flex flex-col gap-y-2"
             >
               <tr className="w-full flex flex-row justify-start items-start gap-x-4">
                 <td className="w-3/6">Толук аты-жөнү/Full name:</td>
