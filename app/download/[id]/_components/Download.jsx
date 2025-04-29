@@ -135,7 +135,7 @@ const Download = ({ id }) => {
               : "w-full p-2"
           } print:w-full print:p-2 print:my-px `}
         >
-          <div className="w-[90%] flex flex-row justify-between items-start pb-6 gap-x-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
+          <div className="w-[90%] flex flex-row justify-center lg:justify-between items-center lg:items-start pb-6 gap-x-2 lg:gap-x-2 border-b-2 border-slate-700 print:w-full">
             <div className="w-1/6 pl-2">
               <Image
                 src={Logo}
@@ -145,7 +145,7 @@ const Download = ({ id }) => {
                 sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
               />
             </div>
-            <div className="w-5/6 flex flex-col  gap-y-2 lg:gap-y-4 jusity-start items-center">
+            <div className="w-5/6 flex flex-col  gap-y-2 justify-center items-center text-center lg:gap-y-4 lg:justify-start">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
                 className="text-md font-medium lg:font-bold"
@@ -168,7 +168,7 @@ const Download = ({ id }) => {
           </div>
           <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
-              <tr className="flex justify-end items-end pb-2">
+              <tr className="flex flex-col justify-end items-end pb-2 text-xs lg:text-sm ">
                 <td style={{ fontFamily: "Times New Roman, serif" }}>
                   Арыздын номери/Reference number {data.referenceNumber}
                 </td>
@@ -199,7 +199,7 @@ const Download = ({ id }) => {
             </thead>
             <tbody
               style={{ fontFamily: "Times New Roman, serif" }}
-              className="flex flex-col gap-y-2"
+              className="flex flex-col gap-y-0.5"
             >
               <tr className="w-full flex flex-row justify-start items-start gap-x-4">
                 <td className="w-3/6">Толук аты-жөнү/Full name:</td>
