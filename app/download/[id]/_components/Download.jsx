@@ -148,19 +148,19 @@ const Download = ({ id }) => {
             <div className="w-5/6 flex flex-col  gap-y-2 justify-center items-center text-center lg:gap-y-4 lg:justify-start">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className=" text-[8px] lg:text-base font-light lg:font-bold"
+                className=" text-[8px] lg:text-lg font-light lg:font-bold"
               >
                 КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ
               </h1>
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-[8px] lg:text-base font-light lg:font-bold"
+                className="text-[8px] lg:text-lg font-light lg:font-bold"
               >
                 MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC
               </h1>
               <h2
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-[8px] lg:text-base font-light lg:font-semibold"
+                className="text-[8px] lg:text-lg font-light lg:font-semibold"
               >
                 Бирдиктүү уруксат/Uniform permit
               </h2>
