@@ -148,19 +148,19 @@ const Download = ({ id }) => {
             <div className="w-5/6 flex flex-col  gap-y-2 justify-center items-center text-center lg:gap-y-4 lg:justify-start">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-medium lg:font-bold"
+                className=" text-xs lg:text-base font-medium lg:font-bold"
               >
                 КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ
               </h1>
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-medium lg:font-bold"
+                className="text-xs lg:text-base font-medium lg:font-bold"
               >
                 MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC
               </h1>
               <h2
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-md font-medium lg:font-semibold"
+                className="text-xs lg:text-base font-medium lg:font-semibold"
               >
                 Бирдиктүү уруксат/Uniform permit
               </h2>
@@ -168,11 +168,13 @@ const Download = ({ id }) => {
           </div>
           <table className="w-[90%] flex flex-col gap-y-4 pt-6 print:w-full">
             <thead>
-              <tr className="flex flex-col justify-end items-end pb-2 text-xs lg:text-sm ">
-                <td style={{ fontFamily: "Times New Roman, serif" }}>
-                  Арыздын номери/Reference number {data.referenceNumber}
-                </td>
-              </tr>
+              {loggedInUser?.user.role === "admin" ? (
+                <tr className="flex flex-col justify-end items-end pb-2 text-xs lg:text-sm ">
+                  <td style={{ fontFamily: "Times New Roman, serif" }}>
+                    Арыздын номери/Reference number {data.referenceNumber}
+                  </td>
+                </tr>
+              ) : null}
               <tr className="flex flex-row justify-between items-start gap-x-2 pt-2">
                 <td>
                   <Image
@@ -184,29 +186,35 @@ const Download = ({ id }) => {
                     sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
                   />
                 </td>
-                <td className="flex flex-col justify-end items-end gap-y-2">
-                  <Image
-                    className="block"
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
-                    alt="qrcode"
-                    width={120}
-                    height={120}
-                    sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
-                    priority
-                  />
-                </td>
+                {loggedInUser?.user.role === "admin" ? (
+                  <td className="flex flex-col justify-end items-end gap-y-2">
+                    <Image
+                      className="block"
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://evisa-egov-kg.online/download/${data._id}`}
+                      alt="qrcode"
+                      width={120}
+                      height={120}
+                      sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
+                      priority
+                    />
+                  </td>
+                ) : (
+                  <td style={{ fontFamily: "Times New Roman, serif" }}>
+                    Арыздын номери/Reference number {data.referenceNumber}
+                  </td>
+                )}
               </tr>
             </thead>
             <tbody
               style={{ fontFamily: "Times New Roman, serif" }}
               className="flex flex-col gap-y-0.5"
             >
-              <tr className="w-full flex flex-row justify-start items-start gap-x-4">
+              <tr className="w-full flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Толук аты-жөнү/Full name:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.name}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Туулган датасы/Date of birth:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">
@@ -215,12 +223,12 @@ const Download = ({ id }) => {
                     : null}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-2">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Жарандыгы / Citizenship: </td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.citizenship}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) номери / Number of Travel
                   document (passport):
@@ -228,14 +236,14 @@ const Download = ({ id }) => {
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.passport}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Жол жүрүүчү документтин түрү/Type of travel document:
                 </td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.travelType}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) берилген датасы/ DATE of
                   issue of the travelling document (passport):
@@ -247,7 +255,7 @@ const Download = ({ id }) => {
                     : "null"}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Жол жүрүүчү документтин (паспорттун) бүткөн датасы/ Date of
                   expiry of the travelling document (passport):
@@ -259,7 +267,7 @@ const Download = ({ id }) => {
                     : "null"}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Бирдиктүү документтин мөөнөтү / Validity of uniform permit:
                 </td>
@@ -270,12 +278,12 @@ const Download = ({ id }) => {
                     : "null"}
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Визанын түрү/Type of visa:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.visaType}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-2">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Визанын колдонулуу мөөнөтү/Validity of visa:
                 </td>
@@ -294,22 +302,22 @@ const Download = ({ id }) => {
                   </div>
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Кирүүлөрдүн саны/Number of entries:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.numberOfEntries}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Жүрүү мөөнөтү/Period of stay(days):</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.periodOfStay}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Чакыруучу тарап/Invitation party:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.invitationParty}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-end gap-x-4">
+              <tr className="flex flex-row justify-start items-end gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">
                   Чакыруу тараптын жеке салык номери/ Inviting party&rsquo;s
                   individual taxpayer number:
@@ -322,12 +330,12 @@ const Download = ({ id }) => {
                   </Link>
                 </td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Иштөөгө уруксут/The right to work:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">{data.rightToWork}</td>
               </tr>
-              <tr className="flex flex-row justify-start items-start gap-x-4">
+              <tr className="flex flex-row justify-start items-start gap-x-4 text-xs lg:text-sm">
                 <td className="w-3/6">Берилген датасы/Date of issue:</td>
                 <td className="w-1/6"></td>
                 <td className="w-2/6">
@@ -339,7 +347,7 @@ const Download = ({ id }) => {
             </tbody>
             <tbody style={{ fontFamily: "Times New Roman, serif" }}>
               <tr>
-                <td className="text-center text-md font-semibold leading-5">
+                <td className="text-center font-semibold leading-5 text-xs lg:text-sm">
                   Validity period of a visa is generally longer than period of
                   stay. The validity period establishes the first and last dates
                   during which the visa can be used. Period of stay indicates
