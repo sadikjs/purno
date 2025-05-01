@@ -116,7 +116,7 @@ const Download = ({ id }) => {
       <div
         className={`${inter.className} ${
           loggedInUser?.user.role === "admin" ? "py-6" : "bg-white"
-        } w-full flex flex-col justify-start items-start bg-[#013082]`}
+        } w-full flex flex-col justify-center items-center bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
           <button onClick={generatePdff} className="text-white relative pt-20">
@@ -148,19 +148,19 @@ const Download = ({ id }) => {
             <div className="w-5/6 flex flex-col  gap-y-2 justify-center items-center text-center lg:gap-y-4 lg:justify-start">
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className=" text-xs lg:text-base font-medium lg:font-bold"
+                className=" text-[10px] lg:text-base font-normal lg:font-bold"
               >
                 КЫРГЫЗ РЕСПУБЛИКАСЫНЫН ТЫШКЫ ИШТЕР МИНИСТРЛИГИ
               </h1>
               <h1
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-xs lg:text-base font-medium lg:font-bold"
+                className="text-[10px] lg:text-base font-normal lg:font-bold"
               >
                 MINISTRY OF FOREIGN AFFAIRS OF THE KYRGYZ REPUBLIC
               </h1>
               <h2
                 style={{ fontFamily: "Times New Roman, serif" }}
-                className="text-xs lg:text-base font-medium lg:font-semibold"
+                className="text-[10px] lg:text-base font-normal lg:font-semibold"
               >
                 Бирдиктүү уруксат/Uniform permit
               </h2>
@@ -201,7 +201,7 @@ const Download = ({ id }) => {
                 ) : (
                   <td
                     style={{ fontFamily: "Times New Roman, serif" }}
-                    className="justify-end items-end text-xs lg:text-sm"
+                    className="justify-end items-end text-[10px] lg:text-sm"
                   >
                     Арыздын номери/Reference number {data.referenceNumber}
                   </td>
