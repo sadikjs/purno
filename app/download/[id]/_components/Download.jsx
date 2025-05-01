@@ -116,7 +116,7 @@ const Download = ({ id }) => {
       <div
         className={`${inter.className} ${
           loggedInUser?.user.role === "admin" ? "py-6" : "bg-white"
-        } w-full flex flex-col justify-center items-center bg-[#013082]`}
+        } w-full flex flex-col justify-start items-start bg-[#013082]`}
       >
         {loggedInUser?.user.role === "admin" ? (
           <button onClick={generatePdff} className="text-white relative pt-20">
@@ -175,7 +175,7 @@ const Download = ({ id }) => {
                   </td>
                 </tr>
               ) : null}
-              <tr className="flex flex-row justify-between items-start gap-x-2 pt-2">
+              <tr className="flex flex-row justify-between items-start gap-x-2 lg:gap-x-6 pt-2">
                 <td>
                   <Image
                     className="border border-gray-300 w-[110px] h-[125px] block"
@@ -199,7 +199,10 @@ const Download = ({ id }) => {
                     />
                   </td>
                 ) : (
-                  <td style={{ fontFamily: "Times New Roman, serif" }}>
+                  <td
+                    style={{ fontFamily: "Times New Roman, serif" }}
+                    className="justify-end items-end text-xs lg:text-sm"
+                  >
                     Арыздын номери/Reference number {data.referenceNumber}
                   </td>
                 )}
