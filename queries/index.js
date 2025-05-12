@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Registration } from "@/model/registration";
 import dbConnect from "@/service/dbConnect";
 import {
@@ -7,9 +6,8 @@ import {
 } from "@/lib/mongoIdToString";
 
 export const getApplication = async () => {
-  await dbConnect();
   try {
-    const allData = await Registration.find().lean();
+    const allData = await Registration.find({}).lean();
     return replaceMongoIdInArray(allData);
   } catch (error) {
     throw new Error(error);
@@ -17,6 +15,7 @@ export const getApplication = async () => {
 };
 
 export const getSingleApplication = async (user) => {
+  await dbConnect();
   try {
     const singleData = await Registration.findById(user)
       .select({
