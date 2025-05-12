@@ -2,14 +2,9 @@
 import mongoose from "mongoose";
 
 // 1. Get the MongoDB URI from environment variables (Recommended)
-const MONGODB_URI = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
-
+// 2. Caching for improved performance (Optional, but good practice)
 let cached = global.mongoose;
 
 if (!cached) {
@@ -23,15 +18,62 @@ async function dbConnect() {
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
+      bufferCommands: false, // Disable command buffering in production
+      serverSelectionTimeoutMS: 5000, // Increase connection timeout if needed (in ms)
+      connectTimeoutMS: 10000, // Increase connection timeout
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    try {
+      cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
+        return mongoose;
+      });
+
+      cached.conn = await cached.promise;
+    } catch (e) {
+      cached.promise = null;
+      throw e;
+    }
   }
-  cached.conn = await cached.promise;
+
   return cached.conn;
 }
 
 export default dbConnect;
+
+// // lib/mongodb.js (Database Connection Utility)
+// import mongoose from "mongoose";
+
+// // 1. Get the MongoDB URI from environment variables (Recommended)
+// const MONGODB_URI = process.env.MONGODB_URI;
+
+// if (!MONGODB_URI) {
+//   throw new Error(
+//     "Please define the MONGODB_URI environment variable inside .env.local"
+//   );
+// }
+
+// let cached = global.mongoose;
+
+// if (!cached) {
+//   cached = global.mongoose = { conn: null, promise: null };
+// }
+
+// async function dbConnect() {
+//   if (cached.conn) {
+//     return cached.conn;
+//   }
+
+//   if (!cached.promise) {
+//     const opts = {
+//       bufferCommands: false,
+//     };
+
+//     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+//       return mongoose;
+//     });
+//   }
+//   cached.conn = await cached.promise;
+//   return cached.conn;
+// }
+
+// export default dbConnect;
