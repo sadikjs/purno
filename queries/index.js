@@ -5,15 +5,6 @@ import {
   replaceMongoIdInObject,
 } from "@/lib/mongoIdToString";
 
-export const getApplication = async () => {
-  try {
-    const allData = await Registration.find({}).lean();
-    return replaceMongoIdInArray(allData);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
-
 export const getSingleApplication = async (user) => {
   await dbConnect();
   try {
@@ -25,6 +16,15 @@ export const getSingleApplication = async (user) => {
       })
       .lean();
     return replaceMongoIdInObject(singleData);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getApplication = async () => {
+  try {
+    const allData = await Registration.find({}).lean();
+    return replaceMongoIdInArray(allData);
   } catch (error) {
     throw new Error(error);
   }
