@@ -67,6 +67,7 @@ export const POST = async (req, res) => {
       dateOfIssue,
       picture: `/uploads/profilePictures/${name}_profile${profileExt}`,
     });
+    res.setHeader("Cache-Control", "no-store, max-age=0");
     return NextResponse.json(
       { message: "upload successfully", data: upload },
       { status: 200 }
