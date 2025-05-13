@@ -6,8 +6,8 @@ import path from "path";
 import bcrypt from "bcryptjs";
 
 export const POST = async (req, res) => {
+  await dbConnect();
   try {
-    await dbConnect();
     const formData = await req.formData();
     const role = formData.get("role");
     const email = formData.get("email");

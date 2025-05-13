@@ -22,8 +22,9 @@ export const getSingleApplication = async (user) => {
 };
 
 export const getApplication = async () => {
+  await dbConnect();
   try {
-    const allData = await Registration.find({}).lean();
+    const allData = await Registration.find().lean();
     return replaceMongoIdInArray(allData);
   } catch (error) {
     throw new Error(error);
